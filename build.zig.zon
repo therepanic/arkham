@@ -1,0 +1,8 @@
+.{
+    .name = .arkham,
+    .version = "0.0.0",
+    .paths = .{},
+    .fingerprint = 0x147e636a14c2138e,
+    .minimum_zig_version = "0.16.0",
+    .dependencies = .{},
+}

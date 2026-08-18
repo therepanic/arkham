@@ -1,0 +1,12 @@
+.{
+    .name = .arkhamdb,
+    .version = "0.0.0",
+    .fingerprint = 0xa85d1b99eebb1532,
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "tests",
+    },
+    .dependencies = .{},
+}
