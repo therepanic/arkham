@@ -33,3 +33,23 @@ fn writeHeader(writer: *std.Io.Writer, header: Header) !void {
     try writer.writeByte(header.endian);
     try writer.writeByte(header.os);
 }
+
+const BranchHeader = struct {
+    from_offset: u64,
+    delta_offset: u64,
+};
+
+const Delta = struct { insn_vaddr: u64, write: Write };
+
+const WriteType = enum(u8) {
+    reg = 0,
+    mem = 1,
+    syscall = 2,
+};
+const Write = union(WriteType) { reg: RegWrite, mem: MemWrite, syscall: SysCall };
+
+const RegWrite = struct { idx: u8, size: u8, value: [*]const u8 };
+
+const MemWrite = struct { addr: u64, size: u64, data: [*]const u8 };
+
+const SysCall = struct { num: u64, args: [8]u64 };
