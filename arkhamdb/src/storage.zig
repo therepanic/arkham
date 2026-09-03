@@ -6,9 +6,12 @@ pub const Storage = struct {
     file: std.Io.File,
 
     pub fn init(io: std.Io, file: std.Io.File, config: Config) !Storage {
-        const writer = file.writer(io).interface;
+        var buf: [64]u8 = undefined;
+        const writer = file.writer(io, buf[0..]).interface;
         const header: Header = .{ .check_sum = config.check_sum, .arch = config.arch, .endian = config.endian, .os = config.os };
         try writeHeader(&writer, header);
+        try writer.flush();
+        try file.setLength(io, 2 * 4096);
         return .{ .io = io, .file = file };
     }
 };
