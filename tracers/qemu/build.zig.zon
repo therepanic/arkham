@@ -1,0 +1,12 @@
+.{
+    .name = .qemu_tracer,
+    .version = "0.0.0",
+    .fingerprint = 0x83cf0527e2229841,
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "tests",
+    },
+    .dependencies = .{},
+}
