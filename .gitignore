@@ -7,3 +7,4 @@ build/
 build-*/
 docgen_tmp/
 .DS_Store
+qemu-plugin.h

@@ -7,11 +7,7 @@ pub const Storage = struct {
 
     pub fn init(io: std.Io, file: std.Io.File, config: Config) !Storage {
         var buf: [64]u8 = undefined;
-<<<<<<< Updated upstream
         var writer = file.writer(io, buf[0..]).interface;
-=======
-        const writer = file.writer(io, buf[0..]).interface;
->>>>>>> Stashed changes
         const header: Header = .{ .check_sum = config.check_sum, .arch = config.arch, .endian = config.endian, .os = config.os };
         try writeHeader(&writer, header);
         try writer.flush();
@@ -35,17 +31,10 @@ const Header = struct {
 fn writeHeader(writer: *std.Io.Writer, header: Header) !void {
     try writer.writeAll(&MAGIC);
     try writer.writeInt(u16, header.version, .little);
-<<<<<<< Updated upstream
     try writer.writeAll(&header.check_sum);
     try writer.writeByte(@intFromEnum(header.arch));
     try writer.writeByte(@intFromEnum(header.endian));
     try writer.writeByte(@intFromEnum(header.os));
-=======
-    try writer.writeAll(header.check_sum);
-    try writer.writeByte(header.arch);
-    try writer.writeByte(header.endian);
-    try writer.writeByte(header.os);
->>>>>>> Stashed changes
 }
 
 const BranchHeader = struct {
