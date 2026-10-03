@@ -2,8 +2,8 @@ const std = @import("std");
 const arkhamdb = @import("arkhamdb");
 
 fn refAll(comptime T: type, comptime depth: usize) void {
-    inline for (comptime std.meta.declarations(T)) |d| {
-        const v = @field(T, d.name);
+    inline for (comptime std.meta.declarations(T)) |name| {
+        const v = @field(T, name);
         if (@TypeOf(v) == type) {
             switch (@typeInfo(v)) {
                 .@"struct", .@"union", .@"enum", .@"opaque" => {
