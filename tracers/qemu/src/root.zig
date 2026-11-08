@@ -7,9 +7,15 @@ export fn qemu_plugin_install(id: c.qemu_plugin_id_t, info: [*c]const c.qemu_inf
     _ = info;
     _ = argc;
     _ = argv;
-    std.debug.print("work", .{});
+    std.debug.print("working", .{});
     c.qemu_plugin_register_vcpu_tb_trans_cb(id, onTbTrans, null);
     return 0;
+}
+
+fn onInsnExec(vcpu_index: c_uint, userdata: ?*anyopaque) callconv(.c) void {
+    _ = vcpu_index;
+    const text: [*:0]const u8 = @ptrCast(userdata.?);
+    std.debug.print("{s}\n", .{text});
 }
 
 fn onTbTrans(tb: ?*c.struct_qemu_plugin_tb, userdata: ?*anyopaque) callconv(.c) void {
@@ -18,10 +24,7 @@ fn onTbTrans(tb: ?*c.struct_qemu_plugin_tb, userdata: ?*anyopaque) callconv(.c) 
     var i: usize = 0;
     while (i < n) : (i += 1) {
         const insn = c.qemu_plugin_tb_get_insn(tb, i);
-        var buf: [16]u8 = undefined;
-        const len = c.qemu_plugin_insn_data(insn, &buf, buf.len);
-        std.debug.print("insn: ", .{});
-        for (buf[0..len]) |byte| std.debug.print("{x:0>2} ", .{byte});
-        std.debug.print("\n", .{});
+        const disas = c.qemu_plugin_insn_disas(insn);
+        c.qemu_plugin_register_vcpu_insn_exec_cb(insn, onInsnExec, c.QEMU_PLUGIN_CB_NO_REGS, disas);
     }
 }
