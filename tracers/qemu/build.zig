@@ -39,6 +39,7 @@ pub fn build(b: *std.Build) void {
         .linkage = .dynamic,
         .root_module = qemu_tracer,
     });
+    lib.linker_allow_shlib_undefined = true;
 
     const tests = b.addTest(.{
         .root_module = b.createModule(.{

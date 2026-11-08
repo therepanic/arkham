@@ -21,3 +21,15 @@ fn refAll(comptime T: type, comptime depth: usize) void {
 test {
     refAll(qemu_tracer, 0);
 }
+
+export fn qemu_plugin_tb_get_insn(tb: ?*anyopaque, idx: usize) ?*anyopaque {
+    _ = tb;
+    _ = idx;
+    return null;
+}
+export fn qemu_plugin_insn_data(insn: ?*anyopaque, dest: ?*anyopaque, len: usize) usize {
+    _ = insn;
+    _ = dest;
+    _ = len;
+    return 0;
+}
