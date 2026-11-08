@@ -7,7 +7,7 @@ export fn qemu_plugin_install(id: c.qemu_plugin_id_t, info: [*c]const c.qemu_inf
     _ = info;
     _ = argc;
     _ = argv;
-    std.debug.print("working", .{});
+    std.debug.print("work", .{});
     c.qemu_plugin_register_vcpu_tb_trans_cb(id, onTbTrans, null);
     return 0;
 }
